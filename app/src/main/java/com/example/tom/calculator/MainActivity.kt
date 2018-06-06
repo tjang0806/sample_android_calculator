@@ -9,11 +9,11 @@ import android.widget.TextView
 import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 
-
 private const val TEXT_CONTENTS = "TextContent"
 
 class MainActivity : AppCompatActivity() {
 
+    // once kotlinx.android.synthetic.main.activity_main.* added, not need to define android components
     /*
     // lateinit = non-null type but do not have to initialize
     // this must be initialized before usage
@@ -33,33 +33,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        /*
-        result = findViewById(R.id.result)
-        newNumber = findViewById(R.id.newNumber)
-
-
-        // Data input buttons
-        val button0: Button = findViewById(R.id.button0)
-        val button1: Button = findViewById(R.id.button1)
-        val button2: Button = findViewById(R.id.button2)
-        val button3: Button = findViewById(R.id.button3)
-        val button4: Button = findViewById(R.id.button4)
-        val button5: Button = findViewById(R.id.button5)
-        val button6: Button = findViewById(R.id.button6)
-        val button7: Button = findViewById(R.id.button7)
-        val button8: Button = findViewById(R.id.button8)
-        val button9: Button = findViewById(R.id.button9)
-        val buttonDot: Button = findViewById(R.id.buttonDot)
-
-        // operation input buttons
-        val buttonEquals = findViewById<Button>(R.id.buttonEquals)
-        val buttonDivide = findViewById<Button>(R.id.buttonDivide)
-        val buttonMultiply = findViewById<Button>(R.id.buttonMultiply)
-        val buttonMinus = findViewById<Button>(R.id.buttonMinus)
-        val buttonPlus = findViewById<Button>(R.id.buttonPlus)
-
-        */
-
+        // add number button listener
+        // when user clicks, the value is added on newNumber text box
         val listener = View.OnClickListener { v ->
             val b = v as Button
             newNumber.append(b.text)
@@ -77,10 +52,13 @@ class MainActivity : AppCompatActivity() {
         button9.setOnClickListener(listener)
         buttonDot.setOnClickListener(listener)
 
+        // operation listener
         var opListener = View.OnClickListener { v ->
 
             val op = (v as Button).text.toString()
             try{
+
+                // arithmetic operation
                 val value = newNumber.text.toString().toDouble()
                 performOperation(value, op)
             }
@@ -98,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         buttonMinus.setOnClickListener(opListener)
         buttonPlus.setOnClickListener(opListener)
 
-
+        //negation button listner
         buttonNeg.setOnClickListener({view ->
             val value = newNumber.text.toString()
             if( value.isEmpty()){
@@ -131,6 +109,9 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // arithmetic operation
+    // two inputs and an operation symbol are input by user, arithmetic operation occer
+    // the first input is stored in operand1, the second one does not need to be saved, so used as value varialbe
     private fun performOperation(value: Double, operation: String){
         //first num
         if(operand1 == null){
@@ -139,6 +120,7 @@ class MainActivity : AppCompatActivity() {
         //second num
         else {
 
+            // default operation
             if(pendingOperation == "="){
                 pendingOperation = operation
             }
@@ -156,7 +138,9 @@ class MainActivity : AppCompatActivity() {
                 "+" -> operand1 = operand1!! + value
             }
         }
+        //calculating result is saved
         result.setText(operand1.toString())
+        //erase input number
         newNumber.setText("")
     }
 }
